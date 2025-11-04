@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TextInput, View, StyleSheet, Pressable } from 'react-native';
+import { Text, TextInput, View, StyleSheet, Pressable, ActivityIndicator } from 'react-native';
 import { db, auth } from "../firebase/config";
 
 class PostComments extends Component {
@@ -14,52 +14,52 @@ class PostComments extends Component {
   }
 
   onSubmit() {
- 
-  if (!auth.currentUser) {
-    this.setState({ error: "Debes estar logueado para publicar." });
-  } 
-  else if (this.state.description === "") {
-    this.setState({ error: "El post no puede estar vacío." });
-  } 
-  else {
-    this.setState({ loading: true, error: "" });
+    if (auth.currentUser === null) {
+      this.setState({ error: "Debes estar logueado para publicar." });
+    } 
+    else if (this.state.description === "") {
+      this.setState({ error: "El post no puede estar vacío." });
+    } 
+    else {
+      this.setState({ loading: true, error: "" });
 
-    db.collection("posts")
-      .add({
-        owner: auth.currentUser.email,
-        description: this.state.description,
-        createdAt: Date.now(),
-        likes: []
-      })
-      .then(() => {
-        this.setState({ description: "", loading: false });
-        this.props.navigation.navigate("Home");
-      })
-      .catch(() => {
-        this.setState({ error: "Error al crear el post", loading: false });
-      });
+      db.collection("posts")
+        .add({
+          owner: auth.currentUser.email,
+          description: this.state.description,
+          createdAt: Date.now(),
+          likes: []
+        })
+        .then(() => {
+          this.setState({ description: "", loading: false });
+          //this.props.navigation.navigate("Profile");
+        })
+        .catch(() => {
+          this.setState({ error: "Error al crear el post", loading: false });
+        });
+    }
   }
-}
 
-
-render() {
+  render() {
     return (
-      <View >
+      <View style={styles.container}>
+        
         <Text style={styles.titulo}>Crea un nuevo Post</Text>
 
         <TextInput
-          placeholder="Agrega un nuevo post"
+          placeholder="Publica un nuevo post..."
           value={this.state.description}
           onChangeText={(text) => this.setState({ description: text })}
+          style={styles.input}
         />
 
-        <Text>{this.state.error}</Text>
+        <Text style={styles.error}>{this.state.error}</Text>
 
         {this.state.loading ? (
-          <ActivityIndicator size="large" color="#0df055ff" />
+          <ActivityIndicator size="large" color="#1DA1F2" />
         ) : (
-          <Pressable  onPress={() => this.onSubmit()}>
-            <Text>Publicar</Text>
+          <Pressable style={styles.boton} onPress={() => this.onSubmit()}>
+            <Text style={styles.botonTexto}>Publicar</Text>
           </Pressable>
         )}
       </View>
@@ -68,12 +68,52 @@ render() {
 }
 
 const styles = StyleSheet.create({
-  titulo: {
-    fontSize: 30,
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 25,
+  },
+  titulo: { 
+    fontSize: 34,
+    color: '#1DA1F2',
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 30,
+  },
+  input: {
+    width: '80%',
+    minHeight: 120,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 20,
+    paddingHorizontal: 15,
+    paddingVertical: 15,
+    fontSize: 16,
+    backgroundColor: '#f5f8fa',
+    marginBottom: 10,
+    textAlignVertical: 'top'
+  },
+  error: {
+    color: 'red',
     textAlign: 'center',
-  }
+    marginBottom: 8,
+    fontSize: 14,
+  },
+  boton: {
+    backgroundColor: '#1DA1F2',
+    borderRadius: 30,
+    paddingVertical: 15,
+    paddingHorizontal: 60,
+    marginTop: 10,
+  },
+  botonTexto: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 18,
+    textAlign: 'center',
+  },
 });
 
 export default PostComments;
+
