@@ -1,23 +1,56 @@
-import {React} from 'react';
-import { Text } from 'react-native';
-import { View } from 'react-native';
-import { StyleSheet } from 'react-native';
+import React, {Component} from 'react';
+import { Text, View, StyleSheet, Pressable } from 'react-native';
+import { auth, db} from '../firebase/config';
 
-function Profile() {
-  return (
-    <View>
-      <Text style={styles.titulo} >Profile</Text>
-    </View>
-  );
+class Profile extends Component {
+  constructor(props){
+    super(props);
+    this.state={
+    }
+  } 
+
+  logout(){
+    auth.signOut()
+      .then(()=> {
+        this.props.navigation.navigate('Login')
+      })
+      .catch(error => console.log(error)) 
+
+  }
+
+  render(){
+    return (
+      <View style={styles.container} >
+        <Pressable style={styles.logoutButton}  onPress={() => this.logout()}>
+          <Text style={styles.logoutText} > Cerrar sesión </Text>
+        </Pressable>
+      </View>
+
+    )
+  }
 }
 
 const styles = StyleSheet.create({
-      titulo: {
-        fontSize: 30,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        textAlign: 'center',
-    }
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 25,
+  },
+  logoutButton: {
+    backgroundColor: '#1DA1F2',
+    paddingVertical: 15,
+    paddingHorizontal: 60,
+    borderRadius: 30,
+    marginTop: 10,
+  },
+  logoutText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 18,
+    textAlign: 'center',
+  }
 });
 
 export default Profile;
