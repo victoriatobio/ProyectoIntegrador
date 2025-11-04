@@ -1,11 +1,10 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Home from "../screens/Home";
 import Profile from "../screens/Profile";
-import Comments from "../screens/Comments";
+import PostComments from "../screens/PostComments";
 
 
 const Tab = createBottomTabNavigator();
@@ -19,7 +18,7 @@ function HomeMenu() {
             <Tab.Screen name="Home" component={Home} 
                 options={{ tabBarIcon: () => <FontAwesome5 name="home" size={24} color="black" />  }} />
 
-            <Tab.Screen name="Comments" component={Comments}
+            <Tab.Screen name="PostComments" component={PostComments}
                 options={{ tabBarIcon: () => <Ionicons name="add-circle" size={24} color="black" /> }}  />   
 
             <Tab.Screen name="Profile" component={Profile}

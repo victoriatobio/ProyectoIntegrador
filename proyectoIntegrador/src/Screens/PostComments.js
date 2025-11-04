@@ -3,10 +3,10 @@ import { Text } from 'react-native';
 import { View } from 'react-native';
 import { StyleSheet } from 'react-native';
 
-function Comments() {
+function PostComments() {
   return (
     <View>
-      <Text style={styles.titulo} >Comments</Text>
+      <Text style={styles.titulo} >Crear nuevo post</Text>
     </View>
   );
 }
@@ -20,4 +20,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Comments;
+export default PostComments;
