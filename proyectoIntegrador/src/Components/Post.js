@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
+
 
 class Post extends Component {
   render() {
@@ -7,6 +8,10 @@ class Post extends Component {
       <View style={styles.card} >
         <Text style={styles.owner} >{this.props.postData.data.owner}</Text>
         <Text style={styles.description} >{this.props.postData.data.description}</Text>
+        <Text>Likes: {this.props.postData.data.likes.length}</Text>
+        <Pressable onPress={ () => this.props.navigation.navigate('Comments')} style={styles.boton2}>
+                        <Text >Comentar</Text>
+                    </Pressable>
       </View>
     );
   }
@@ -32,7 +37,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#14171A',
     marginBottom: 5,
-  }
+  },
+  boton2: {
+    marginTop: 10,
+    backgroundColor: '#E1E8ED',
+    paddingVertical: 8,
+    paddingHorizontal: 1,
+    borderRadius: 20,
+    alignItems: 'center',
+    width: 80,
+  },
 });
 
 

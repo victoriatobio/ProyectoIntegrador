@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Register from "./src/screens/Register";
 import Login from "./src/screens/Login";
 import HomeMenu from "./src/components/HomeMenu";
+import Comments from "./src/screens/Comments";
 
 
 export default function App() {
@@ -12,6 +13,7 @@ export default function App() {
       <Stack.Screen name="Register" component={Register} options={{headerShown: false}} />   
       <Stack.Screen name="Login" component={Login} options={{headerShown: false}} />
       <Stack.Screen name="HomeMenu" component={HomeMenu} options={{headerShown: false}}/> 
+      <Stack.Screen name="Comments" component={Comments} /> 
     </Stack.Navigator>
   </NavigationContainer>
   );

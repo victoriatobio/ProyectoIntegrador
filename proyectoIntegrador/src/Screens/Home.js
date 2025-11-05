@@ -37,7 +37,7 @@ render(){
       <FlatList  style={styles.listContent}
           data={this.state.posts}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <Post postData={item} 
+          renderItem={({ item }) => <Post postData={item} navigation={this.props.navigation} 
           
           />}
         />
