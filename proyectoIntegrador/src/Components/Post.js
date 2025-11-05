@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
-
+import { auth } from '../firebase/config';
 
 class Post extends Component {
   render() {
@@ -9,9 +9,15 @@ class Post extends Component {
         <Text style={styles.owner} >{this.props.postData.data.owner}</Text>
         <Text style={styles.description} >{this.props.postData.data.description}</Text>
         <Text>Likes: {this.props.postData.data.likes.length}</Text>
-        <Pressable onPress={ () => this.props.navigation.navigate('Comments')} style={styles.boton2}>
-                        <Text >Comentar</Text>
-                    </Pressable>
+        {auth.currentUser.email !== "" ? (
+          <Pressable
+            onPress={() => this.props.navigation.navigate('Comments')}
+            style={styles.boton2}>
+            <Text>Comentar</Text>
+          </Pressable> ) : 
+          (
+          <Text style={styles.minitexto}>Inicia sesión para comentar</Text>
+        )}
       </View>
     );
   }
@@ -46,6 +52,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     width: 80,
+  },
+  minitexto: {
+    color: 'red',
+    marginVertical: 10,
+    fontSize: 12,
   },
 });
 

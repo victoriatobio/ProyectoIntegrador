@@ -7,18 +7,10 @@ function Comments() {
 
     return (
         <View>
-          <Text style={styles.titulo} >Comments</Text>
+          <Text>Comments</Text>
         </View>
   );
 }
-const styles = StyleSheet.create({
-    titulo: {
-      fontSize: 30,
-      fontWeight: 'bold',
-      marginBottom: 20,
-      textAlign: 'center',
-  }
 
-});
 
 export default Comments;
