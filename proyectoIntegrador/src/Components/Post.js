@@ -5,8 +5,8 @@ class Post extends Component {
   render() {
     return (
       <View style={styles.card} >
-        <Text style={styles.owner} >{this.props.postData.owner}</Text>
-        <Text style={styles.description} >{this.props.postData.description}</Text>
+        <Text style={styles.owner} >{this.props.postData.data.owner}</Text>
+        <Text style={styles.description} >{this.props.postData.data.description}</Text>
       </View>
     );
   }
