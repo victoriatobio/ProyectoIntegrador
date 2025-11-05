@@ -14,10 +14,7 @@ class PostComments extends Component {
   }
 
   onSubmit() {
-    if (auth.currentUser === null) {
-      this.setState({ error: "Debes estar logueado para publicar." });
-    } 
-    else if (this.state.description === "") {
+    if (this.state.description === "") {
       this.setState({ error: "El post no puede estar vacío." });
     } 
     else {
@@ -32,11 +29,9 @@ class PostComments extends Component {
         })
         .then(() => {
           this.setState({ description: "", loading: false });
-          //this.props.navigation.navigate("Profile");
+       
         })
-        .catch(() => {
-          this.setState({ error: "Error al crear el post", loading: false });
-        });
+        .catch(error => console.log(error));
     }
   }
 
@@ -47,7 +42,7 @@ class PostComments extends Component {
         <Text style={styles.titulo}>Crea un nuevo Post</Text>
 
         <TextInput
-          placeholder="Publica un nuevo post..."
+          placeholder="Publica un post..."
           value={this.state.description}
           onChangeText={(text) => this.setState({ description: text })}
           style={styles.input}
