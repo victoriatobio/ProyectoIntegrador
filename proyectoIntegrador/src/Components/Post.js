@@ -13,7 +13,7 @@ class Post extends Component {
           <Pressable
             onPress={() => this.props.navigation.navigate('Comments')}
             style={styles.boton2}>
-            <Text>Comentar</Text>
+            <Text style={styles.coment}>Comentar</Text>
           </Pressable> ) : 
           (
           <Text style={styles.minitexto}>Inicia sesión para comentar</Text>
@@ -32,6 +32,8 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderWidth: 1,
     borderColor: '#E6ECF0',
+    marginLeft: 40,
+    marginRight: 40,
   },
   owner: {
     color: '#1DA1F2',
@@ -58,6 +60,10 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     fontSize: 12,
   },
+  coment:{
+    color: '#1DA1F2',
+    fontSize: 14,
+  }
 });
 
 
