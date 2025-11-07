@@ -25,7 +25,8 @@ class PostComments extends Component {
           owner: auth.currentUser.email,
           description: this.state.description,
           createdAt: Date.now(),
-          likes: []
+          likes: [],
+          comentarios: []
         })
         .then(() => {
           this.setState({ description: "", loading: false });
