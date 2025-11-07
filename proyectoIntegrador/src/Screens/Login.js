@@ -13,6 +13,14 @@ class Login extends Component {
     }
   }
 
+  componentDidMount(){
+    auth.onAuthStateChanged((user) => {
+      if (user){
+        this.props.navigation.navigate('HomeMenu');
+      }
+    })
+  }
+
   login(){
     auth.signInWithEmailAndPassword(this.state.email, this.state.password)
       .then((response) => {
@@ -30,14 +38,14 @@ class Login extends Component {
         <Text style={styles.logo} > Login </Text>
         
         <TextInput
-          keyboardTyp = 'email-address'
+          keyboardType = 'email-address'
           placeholder = 'email'
           style={styles.input}
           onChangeText = {text => this.setState({email:text})}
           value = {this.state.email}
         />
         <TextInput
-          keyboardType=''
+          keyboardType='default'
           placeholder = 'password'
           secureTextEntry={true} 
           style={styles.input}
