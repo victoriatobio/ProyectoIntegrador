@@ -40,7 +40,8 @@ class Profile extends Component {
   render(){
     return (
       <View style={styles.container} >
-        <Text style={styles.titulo}>Mis posteos</Text>
+        <Text style={styles.headerTitle}>Mis perfil</Text>
+        <Text style={styles.sectionTitle}>Mis posteos</Text>
           <FlatList
               data={this.state.posts}
               keyExtractor={(item) => item.id}
@@ -64,6 +65,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 25,
+  },
+  headerTitle: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    color: '#1DA1F2',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#14171A',
+    marginBottom: 10,
+    textAlign: 'center',
   },
   logoutButton: {
     backgroundColor: '#1DA1F2',
