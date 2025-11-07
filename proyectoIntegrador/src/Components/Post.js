@@ -11,7 +11,7 @@ class Post extends Component {
         <Text>Likes: {this.props.postData.data.likes.length}</Text>
         {auth.currentUser.email !== "" ? (
           <Pressable
-            onPress={() => this.props.navigation.navigate('Comments')}
+            onPress={() => this.props.navigation.navigate('Comments', { postId: this.props.postData.id })}
             style={styles.boton2}>
             <Text style={styles.coment}>Comentar</Text>
           </Pressable> ) : 
