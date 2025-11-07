@@ -40,7 +40,7 @@ class Profile extends Component {
   render(){
     return (
       <View style={styles.container} >
-        <Text style={styles.headerTitle}>Mis perfil</Text>
+        <Text style={styles.headerTitle}>Mi perfil</Text>
         <Text style={styles.sectionTitle}>Mis posteos</Text>
           <FlatList
               data={this.state.posts}
@@ -74,11 +74,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   sectionTitle: {
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: 'bold',
     color: '#14171A',
     marginBottom: 10,
-    textAlign: 'center',
+    alignSelf: 'flex-start',
   },
   logoutButton: {
     backgroundColor: '#1DA1F2',
