@@ -1,7 +1,7 @@
-import React from 'react';
-import { Text } from 'react-native';
-import { View } from 'react-native';
-import { StyleSheet } from 'react-native';
+import React, { Component } from "react";
+import { View, Text, TextInput, Pressable, ActivityIndicator } from "react-native";
+import { db, auth } from "../firebase/config";
+import firebase from "firebase/app";
 
 class Comments extends Component {
   constructor(props) {
@@ -50,7 +50,7 @@ class Comments extends Component {
     }
   }
 
-  render() {  
+  render() {
     return (
       <View>
         <Text>Agregar comentario</Text>
@@ -74,6 +74,5 @@ class Comments extends Component {
     );
   }
 }
-
 
 export default Comments;
