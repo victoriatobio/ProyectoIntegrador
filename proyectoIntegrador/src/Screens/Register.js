@@ -41,7 +41,8 @@ class Register extends Component {
          })     
         .catch( error => {
             console.log(error);
-          this.setState({error: 'Fallo en el registro.'})
+            this.setState({error: error.message})
+            
         })
 
       }
