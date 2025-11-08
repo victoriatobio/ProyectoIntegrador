@@ -11,8 +11,7 @@ class Comments extends Component {
       muestradecomentarios: [],
       subiendoelcomentario: false,
       error: "",
-      cargando: true,
-      //cargandocomentarios
+      cargandocomentarios: true, // unificado
     };
   }
 
@@ -51,7 +50,8 @@ class Comments extends Component {
       db.collection("posts")
         .doc(postId)
         .update({
-          commentarionuevo: firebase.firestore.FieldValue.arrayUnion(nuevoComentario),
+          // 🔧 cambio necesario: coincide con el campo leído
+          muestradecomentarios: firebase.firestore.FieldValue.arrayUnion(nuevoComentario),
         })
         .then(() => {
           this.setState({
@@ -84,7 +84,7 @@ class Comments extends Component {
             ) : (
               <FlatList
                 data={this.state.muestradecomentarios}
-                keyExtractor={(index) => index.toString()}
+                keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => (
                   <View style={styles.commentBox}>
                     <Text style={styles.user}>{item.user}</Text>
@@ -104,7 +104,7 @@ class Comments extends Component {
             />
 
             {this.state.error !== "" ? (
-               <Text style={styles.error}>{this.state.error}</Text>
+              <Text style={styles.error}>{this.state.error}</Text>
             ) : null}
 
             {this.state.subiendoelcomentario ? (
@@ -115,10 +115,12 @@ class Comments extends Component {
               </Pressable>
             )}
 
-          <Pressable style={styles.volver} onPress={() => this.props.navigation.navigate('HomeMenu')}>
-            <Text style={styles.volverText}>Volver a Home</Text>
-          </Pressable>
-
+            <Pressable
+              style={styles.volver}
+              onPress={() => this.props.navigation.navigate("HomeMenu")}
+            >
+              <Text style={styles.volverText}>Volver a Home</Text>
+            </Pressable>
           </View>
         )}
       </View>
@@ -202,12 +204,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   volverText: {
-   color: '#1DA1F2',
-   fontSize: 16,
-   fontWeight: 'bold',
-   textAlign: "center",
-},
-
+    color: "#1DA1F2",
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
 });
 
 export default Comments;
