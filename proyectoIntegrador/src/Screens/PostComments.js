@@ -30,6 +30,7 @@ class PostComments extends Component {
         })
         .then(() => {
           this.setState({ description: "", loading: false });
+          this.props.navigation.navigate('Profile');
        
         })
         .catch(error => console.log(error));

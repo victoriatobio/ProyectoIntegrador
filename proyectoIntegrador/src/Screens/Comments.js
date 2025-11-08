@@ -111,6 +111,11 @@ class Comments extends Component {
                 <Text style={styles.botonTexto}>Publicar comentario</Text>
               </Pressable>
             )}
+
+          <Pressable style={styles.volver} onPress={() => this.props.navigation.navigate('HomeMenu')}>
+            <Text style={styles.volverText}>Volver a Home</Text>
+          </Pressable>
+
           </View>
         )}
       </View>
@@ -190,6 +195,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
   },
+  volver: {
+    marginBottom: 10,
+  },
+  volverText: {
+   color: '#1DA1F2',
+   fontSize: 16,
+   fontWeight: 'bold',
+   textAlign: "center",
+},
+
 });
 
 export default Comments;
