@@ -29,12 +29,12 @@ class Home extends Component {
 
 render(){
   return (
-    <View>
+    <View style={styles.scroleable}>
       <Text style={styles.titulo} >Home</Text>
 
 
 
-      <FlatList  style={styles.listContent}
+      <FlatList  
           data={this.state.posts}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => <Post postData={item} navigation={this.props.navigation} 
@@ -53,6 +53,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 20,
         textAlign: 'center',
+    },
+    scroleable: {
+      width: '100%',
+      flex: 1
     }
 });
 
