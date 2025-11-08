@@ -103,7 +103,9 @@ class Comments extends Component {
               onChangeText={(text) => this.setState({ commentarionuevo: text })}
             />
 
-            {this.state.error !== "" && <Text style={styles.error}>{this.state.error}</Text>}
+            {this.state.error !== "" ? (
+               <Text style={styles.error}>{this.state.error}</Text>
+            ) : null}
 
             {this.state.subiendoelcomentario ? (
               <ActivityIndicator color="#1DA1F2" />
