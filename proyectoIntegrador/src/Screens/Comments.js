@@ -7,11 +7,12 @@ class Comments extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      comment: "",
-      comentarios: [],
-      loading: false,
+      commentarionuevo: "",
+      muestradecomentarios: [],
+      subiendoelcomentario: false,
       error: "",
       cargando: true,
+      //cargandocomentarios
     };
   }
 
@@ -22,13 +23,13 @@ class Comments extends Component {
       .doc(postId)
       .onSnapshot((doc) => {
         const data = doc.data();
-        let comentarios = [];
-        if (data.comentarios) {
-          comentarios = data.comentarios;
+        let muestradecomentarios = [];
+        if (data.muestradecomentarios) {
+          muestradecomentarios = data.muestradecomentarios;
         }
         this.setState({
-          comentarios: comentarios,
-          cargando: false,
+          muestradecomentarios: muestradecomentarios,
+          cargandocomentarios: false,
         });
       });
   }
@@ -36,26 +37,26 @@ class Comments extends Component {
   addComment() {
     const postId = this.props.route.params.postId;
 
-    if (this.state.comment === "") {
+    if (this.state.commentarionuevo === "") {
       this.setState({ error: "El comentario no puede estar vacío." });
     } else {
-      this.setState({ loading: true, error: "" });
+      this.setState({ subiendoelcomentario: true, error: "" });
 
       const nuevoComentario = {
         user: auth.currentUser.email,
-        text: this.state.comment,
+        text: this.state.commentarionuevo,
         createdAt: Date.now(),
       };
 
       db.collection("posts")
         .doc(postId)
         .update({
-          comentarios: firebase.firestore.FieldValue.arrayUnion(nuevoComentario),
+          commentarionuevo: firebase.firestore.FieldValue.arrayUnion(nuevoComentario),
         })
         .then(() => {
           this.setState({
-            comment: "",
-            loading: false,
+            commentarionuevo: "",
+            subiendoelcomentario: false,
             error: "",
           });
           console.log("Comentario agregado!");
@@ -63,7 +64,7 @@ class Comments extends Component {
         .catch(() => {
           this.setState({
             error: "Hubo un problema al publicar el comentario.",
-            loading: false,
+            subiendoelcomentario: false,
           });
         });
     }
@@ -72,17 +73,17 @@ class Comments extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {this.state.cargando ? (
+        {this.state.cargandocomentarios ? (
           <ActivityIndicator size="large" color="#1DA1F2" />
         ) : (
           <View style={styles.innerContainer}>
             <Text style={styles.titulo}>Comentarios</Text>
 
-            {this.state.comentarios.length === 0 ? (
+            {this.state.muestradecomentarios.length === 0 ? (
               <Text style={styles.noComments}>No hay comentarios aún.</Text>
             ) : (
               <FlatList
-                data={this.state.comentarios}
+                data={this.state.muestradecomentarios}
                 keyExtractor={(index) => index.toString()}
                 renderItem={({ item }) => (
                   <View style={styles.commentBox}>
@@ -98,13 +99,13 @@ class Comments extends Component {
             <TextInput
               style={styles.input}
               placeholder="Escribí tu comentario..."
-              value={this.state.comment}
-              onChangeText={(text) => this.setState({ comment: text })}
+              value={this.state.commentarionuevo}
+              onChangeText={(text) => this.setState({ commentarionuevo: text })}
             />
 
             {this.state.error !== "" && <Text style={styles.error}>{this.state.error}</Text>}
 
-            {this.state.loading ? (
+            {this.state.subiendoelcomentario ? (
               <ActivityIndicator color="#1DA1F2" />
             ) : (
               <Pressable style={styles.boton} onPress={() => this.addComment()}>
