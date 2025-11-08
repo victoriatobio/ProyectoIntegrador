@@ -3,6 +3,19 @@ import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { auth } from '../firebase/config';
 
 class Post extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      fav: false,
+    };
+  }
+
+  agregarEmailFavoritos() {
+    
+  }
+
+
+
   render() {
     return (
       <View style={styles.card} >
@@ -17,7 +30,12 @@ class Post extends Component {
           </Pressable> ) : 
           (
           <Text style={styles.minitexto}>Inicia sesión para comentar</Text>
-        )}
+          )}
+
+          <Pressable onPress={()=> this.agregarEmailFavoritos()}>
+              <Text>{this.state.fav ? "Sacar de Favoritos" : "Agregar a Favoritos"}</Text>
+          </Pressable>
+
       </View>
     );
   }
