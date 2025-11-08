@@ -3,12 +3,14 @@ import { View, Text, StyleSheet, Pressable, FlatList } from 'react-native';
 import { db, auth } from '../firebase/config'
 import firebase from 'firebase';
 import Post from '../components/Post';
+import { ActivityIndicator } from 'react-native';
 
 class Home extends Component {
   constructor(props){
     super(props);
     this.state = {
       posts: [],
+      loading: true,
     }
   }
 
@@ -22,7 +24,8 @@ class Home extends Component {
             data: doc.data(),
           })
         );
-        this.setState({ posts: posts });
+        this.setState({ posts: posts })
+        this.setState({ loading: false });
       },
     );
   }
@@ -32,15 +35,17 @@ render(){
     <View style={styles.scroleable}>
       <Text style={styles.titulo} >Home</Text>
 
+      {this.state.loading? 
+      (<ActivityIndicator size='large' color='green' />) :
+      (<FlatList  
+        data={this.state.posts}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <Post postData={item} navigation={this.props.navigation} 
+        
+        />}
+      />)}
 
-
-      <FlatList  
-          data={this.state.posts}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <Post postData={item} navigation={this.props.navigation} 
-          
-          />}
-        />
+      
     </View>
   );
 }
