@@ -11,7 +11,7 @@ class Comments extends Component {
       muestradecomentarios: [],
       subiendoelcomentario: false,
       error: "",
-      cargandocomentarios: true, // unificado
+      cargandocomentarios: true, 
     };
   }
 
@@ -50,7 +50,7 @@ class Comments extends Component {
       db.collection("posts")
         .doc(postId)
         .update({
-          // 🔧 cambio necesario: coincide con el campo leído
+          
           muestradecomentarios: firebase.firestore.FieldValue.arrayUnion(nuevoComentario),
         })
         .then(() => {
@@ -84,7 +84,7 @@ class Comments extends Component {
             ) : (
               <FlatList
                 data={this.state.muestradecomentarios}
-                keyExtractor={(item, index) => index.toString()}
+                keyExtractor={(index) => index.toString()}
                 renderItem={({ item }) => (
                   <View style={styles.commentBox}>
                     <Text style={styles.user}>{item.user}</Text>
