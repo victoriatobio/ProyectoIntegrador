@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, TextInput, Pressable, FlatList, ActivityIndicator } from "react-native";
+import { View, Text, TextInput, Pressable, FlatList, ActivityIndicator, StyleSheet } from "react-native";
 import { db, auth } from "../firebase/config";
 import firebase from "firebase/app";
 
@@ -34,12 +34,11 @@ class Comments extends Component {
   }
 
   addComment() {
-     const postId = this.props.route.params.postId;
+    const postId = this.props.route.params.postId;
 
     if (this.state.comment === "") {
       this.setState({ error: "El comentario no puede estar vacío." });
-    } 
-    else {
+    } else {
       this.setState({ loading: true, error: "" });
 
       const nuevoComentario = {
@@ -48,7 +47,7 @@ class Comments extends Component {
         createdAt: Date.now(),
       };
 
-       db.collection("posts")
+      db.collection("posts")
         .doc(postId)
         .update({
           comentarios: firebase.firestore.FieldValue.arrayUnion(nuevoComentario),
@@ -61,7 +60,7 @@ class Comments extends Component {
           });
           console.log("Comentario agregado!");
         })
-         .catch(() => {
+        .catch(() => {
           this.setState({
             error: "Hubo un problema al publicar el comentario.",
             loading: false,
@@ -72,43 +71,44 @@ class Comments extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         {this.state.cargando ? (
           <ActivityIndicator size="large" color="#1DA1F2" />
         ) : (
-          <View>
-            <Text>Comentarios</Text>
+          <View style={styles.innerContainer}>
+            <Text style={styles.titulo}>Comentarios</Text>
 
             {this.state.comentarios.length === 0 ? (
-              <Text>No hay comentarios aún.</Text>
+              <Text style={styles.noComments}>No hay comentarios aún.</Text>
             ) : (
               <FlatList
                 data={this.state.comentarios}
                 keyExtractor={(index) => index.toString()}
                 renderItem={({ item }) => (
-                  <View>
-                    <Text> {item.user}</Text>
-                    <Text>{item.text}</Text>
+                  <View style={styles.commentBox}>
+                    <Text style={styles.user}>{item.user}</Text>
+                    <Text style={styles.commentText}>{item.text}</Text>
                   </View>
                 )}
               />
             )}
 
-            <Text>Agregar comentario</Text>
+            <Text style={styles.subtitulo}>Agregar comentario</Text>
 
             <TextInput
+              style={styles.input}
               placeholder="Escribí tu comentario..."
               value={this.state.comment}
               onChangeText={(text) => this.setState({ comment: text })}
             />
 
-            <Text>{this.state.error}</Text>
+            {this.state.error !== "" && <Text style={styles.error}>{this.state.error}</Text>}
 
             {this.state.loading ? (
               <ActivityIndicator color="#1DA1F2" />
             ) : (
-              <Pressable onPress={() => this.addComment()}>
-                <Text>Publicar comentario</Text>
+              <Pressable style={styles.boton} onPress={() => this.addComment()}>
+                <Text style={styles.botonTexto}>Publicar comentario</Text>
               </Pressable>
             )}
           </View>
@@ -117,5 +117,79 @@ class Comments extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+  },
+  innerContainer: {
+    flex: 1,
+  },
+  titulo: {
+    fontSize: 30,
+    fontWeight: "bold",
+    marginBottom: 15,
+    textAlign: "center",
+    color: "#1DA1F2",
+  },
+  subtitulo: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginVertical: 10,
+  },
+  noComments: {
+    textAlign: "center",
+    fontSize: 16,
+    color: "#555",
+    marginBottom: 10,
+  },
+  commentBox: {
+    backgroundColor: "#f5f8fa",
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  user: {
+    fontWeight: "bold",
+    marginBottom: 5,
+    color: "#333",
+  },
+  commentText: {
+    fontSize: 16,
+    color: "#333",
+  },
+  input: {
+    width: "100%",
+    height: 50,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 30,
+    paddingHorizontal: 20,
+    marginBottom: 10,
+    backgroundColor: "#f5f8fa",
+    fontSize: 16,
+  },
+  error: {
+    color: "red",
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  boton: {
+    backgroundColor: "#1DA1F2",
+    borderRadius: 30,
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    alignItems: "center",
+    marginTop: 5,
+  },
+  botonTexto: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+});
 
 export default Comments;

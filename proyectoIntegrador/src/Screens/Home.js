@@ -36,7 +36,7 @@ render(){
       <Text style={styles.titulo} >Home</Text>
 
       {this.state.loading? 
-      (<ActivityIndicator size='large' color='green' />) :
+      (<ActivityIndicator size='large' color='"#1DA1F2"' />) :
       (<FlatList  
         data={this.state.posts}
         keyExtractor={(item) => item.id}
