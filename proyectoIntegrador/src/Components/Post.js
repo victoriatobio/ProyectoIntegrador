@@ -20,7 +20,18 @@ class Post extends Component {
   }
   agregarEmailFavoritos() {
     if (this.props.postData.data.likes.includes(auth.currentUser.email)){
-      // tengo que ver como sacarlo del array
+      db.collection('posts')
+            .doc(this.props.postData.id)
+            .update({
+               likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email)
+
+            })
+            .then(()=>{
+                this.setState({
+                    fav:false
+                })
+            })
+
   } else{
       db.collection('posts')
       .doc(this.props.postData.id)
