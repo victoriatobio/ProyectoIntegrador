@@ -19,7 +19,20 @@ class Post extends Component {
 
   }
   agregarEmailFavoritos() {
- 
+    if (this.props.postData.data.likes.includes(auth.currentUser.email)){
+      // tengo que ver como sacarlo del array
+  } else{
+      db.collection('posts')
+      .doc(this.props.postData.id)
+      .update({
+         likes: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email)
+      })
+      .then(()=>{
+        this.setState({fav:true
+          })
+      })
+
+  }
   }
 
 
@@ -30,7 +43,7 @@ class Post extends Component {
         <Text style={styles.owner} >{this.props.postData.data.owner}</Text>
         <Text style={styles.description} >{this.props.postData.data.description}</Text>
         <Text>Likes: {this.props.postData.data.likes.length}</Text>
-        
+
           <Pressable
             onPress={() => this.props.navigation.navigate('Comments', { postId: this.props.postData.id })}
             style={styles.boton2}>
