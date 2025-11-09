@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { auth } from '../firebase/config';
+import { db } from '../firebase/config';
+import firebase from 'firebase';
+
 
 class Post extends Component {
   constructor(props) {
