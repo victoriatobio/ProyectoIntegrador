@@ -17,20 +17,15 @@ class Post extends Component {
 
   
   componentDidMount() {
-    
-
     if (this.props.postData.data.likes.includes(auth.currentUser.email)) {
       this.setState({fav:true})
-
     }
 
   }
+
   agregarEmailFavoritos() {
     let lista = []
 
-    if (this.state.listaDeYaLikearon.includes(auth.currentUser.email)){
-      this.setState({texto:"Ya le diste like a este post"})
-    } else {
       if (this.props.postData.data.likes.includes(auth.currentUser.email)){
         db.collection('posts')
               .doc(this.props.postData.id)
@@ -44,7 +39,9 @@ class Post extends Component {
                   })
               })
   
-      } else{
+      } else if (this.state.listaDeYaLikearon.includes(auth.currentUser.email)){
+        this.setState({texto:"Ya le diste like a este post"})
+      } else {
           db.collection('posts')
           .doc(this.props.postData.id)
           .update({
@@ -62,7 +59,7 @@ class Post extends Component {
       }
       }
   
-  }
+  
 
 
 
@@ -82,6 +79,7 @@ class Post extends Component {
           <Pressable onPress={()=> this.agregarEmailFavoritos()}>
               <Text>{this.state.fav ? "Sacar de Favoritos" : "Agregar a Favoritos"}</Text>
           </Pressable>
+
 
       </View>
     );
