@@ -9,9 +9,8 @@ class Comments extends Component {
     this.state = {
       commentarionuevo: "",
       muestradecomentarios: [],
-      subiendoelcomentario: false,
       error: "",
-      cargandocomentarios: true, 
+      cargandocomentarios: true,
     };
   }
 
@@ -39,7 +38,7 @@ class Comments extends Component {
     if (this.state.commentarionuevo === "") {
       this.setState({ error: "El comentario no puede estar vacío." });
     } else {
-      this.setState({ subiendoelcomentario: true, error: "" });
+      this.setState({ error: "" });
 
       const nuevoComentario = {
         user: auth.currentUser.email,
@@ -50,13 +49,11 @@ class Comments extends Component {
       db.collection("posts")
         .doc(postId)
         .update({
-          
           muestradecomentarios: firebase.firestore.FieldValue.arrayUnion(nuevoComentario),
         })
         .then(() => {
           this.setState({
             commentarionuevo: "",
-            subiendoelcomentario: false,
             error: "",
           });
           console.log("Comentario agregado!");
@@ -64,7 +61,6 @@ class Comments extends Component {
         .catch(() => {
           this.setState({
             error: "Hubo un problema al publicar el comentario.",
-            subiendoelcomentario: false,
           });
         });
     }
@@ -107,18 +103,11 @@ class Comments extends Component {
               <Text style={styles.error}>{this.state.error}</Text>
             ) : null}
 
-            {this.state.subiendoelcomentario ? (
-              <ActivityIndicator color="#1DA1F2" />
-            ) : (
-              <Pressable style={styles.boton} onPress={() => this.addComment()}>
-                <Text style={styles.botonTexto}>Publicar comentario</Text>
-              </Pressable>
-            )}
+            <Pressable style={styles.boton} onPress={() => this.addComment()}>
+              <Text style={styles.botonTexto}>Publicar comentario</Text>
+            </Pressable>
 
-            <Pressable
-              style={styles.volver}
-              onPress={() => this.props.navigation.navigate("HomeMenu")}
-            >
+            <Pressable style={styles.volver} onPress={() => this.props.navigation.navigate("HomeMenu")}>
               <Text style={styles.volverText}>Volver a Home</Text>
             </Pressable>
           </View>
