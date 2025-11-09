@@ -11,7 +11,7 @@ class Post extends Component {
   }
 
   agregarEmailFavoritos() {
-    
+
   }
 
 
@@ -22,16 +22,11 @@ class Post extends Component {
         <Text style={styles.owner} >{this.props.postData.data.owner}</Text>
         <Text style={styles.description} >{this.props.postData.data.description}</Text>
         <Text>Likes: {this.props.postData.data.likes.length}</Text>
-        {auth.currentUser.email !== "" ? (
           <Pressable
             onPress={() => this.props.navigation.navigate('Comments', { postId: this.props.postData.id })}
             style={styles.boton2}>
             <Text style={styles.coment}>Comentar</Text>
-          </Pressable> ) : 
-          (
-          <Text style={styles.minitexto}>Inicia sesión para comentar</Text>
-          )}
-
+          </Pressable> 
           <Pressable onPress={()=> this.agregarEmailFavoritos()}>
               <Text>{this.state.fav ? "Sacar de Favoritos" : "Agregar a Favoritos"}</Text>
           </Pressable>
