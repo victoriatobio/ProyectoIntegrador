@@ -56,6 +56,7 @@ class Post extends Component {
 
 
   render() {
+    console.log(this.props);
     return (
       <View style={styles.card} >
         <Text style={styles.owner} >{this.props.postData.data.owner}</Text>
