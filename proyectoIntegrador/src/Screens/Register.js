@@ -1,7 +1,8 @@
 import React, {Component} from "react";
-import { View, Text, Image, StyleSheet, FlatList, TextInput } from "react-native";
+import { View, Text, Image, StyleSheet, FlatList, TextInput} from "react-native";
 import { Pressable } from "react-native";
 import { db, auth } from "../firebase/config"
+import twitterLogo from '../../assets/twitterLogo.png';
 
 
 class Register extends Component {
@@ -49,6 +50,7 @@ class Register extends Component {
      render (){
         return(
             <View style={styles.container}>
+                <Image source={twitterLogo}  style={styles.image}/>
                 <Text style={styles.logo} >Register</Text>
 
                 <TextInput style={styles.input} 
@@ -135,6 +137,13 @@ const styles = StyleSheet.create({
   registerText: {
     color: '#1DA1F2',
     fontSize: 16,
+  },
+  image: {
+    width: 80,                
+    height: 80,
+    resizeMode: 'contain',    
+    marginBottom: 20,        
+    alignSelf: 'center',    
   },
 });
 
