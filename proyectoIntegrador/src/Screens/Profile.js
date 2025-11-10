@@ -63,17 +63,14 @@ class Profile extends Component {
 
         {this.state.loading ? (
           <ActivityIndicator size="large" color="#1DA1F2" />
-          ) : (
-            <View>
-              <View style={styles.profileInfo}>
-                <Image source={profileTwitter} style={styles.profileImage} />
-                  <Text style={styles.followText}>120 Siguiendo</Text>
-                  <Text style={styles.followText}>300 Seguidores</Text>
+        ) : (
+          <View>
+              <Image source={profileTwitter} style={styles.profileImage} />
 
-              </View>
-
-              {/* Usuario y email */}
-              <View style={styles.userData}>
+              <View style={styles.profileDetails}>
+                <Text style={styles.followText}>120 Siguiendo     </Text>
+                <Text style={styles.followText}>300 Seguidores    </Text>
+               
                 <Text style={styles.userInfo}>
                   @{this.state.users.length > 0 ? this.state.users[0].data.userName : ''}
                 </Text>
@@ -82,26 +79,23 @@ class Profile extends Component {
                 </Text>
               </View>
 
-              {/* Posteos */}
-              <View style={styles.postsSection}>
-                <Text style={styles.sectionTitle}>Mis posteos</Text>
-
-                <FlatList
-                  data={this.state.posts}
-                  keyExtractor={(item) => item.id}
-                  renderItem={({ item }) => (
-                    <Post postData={item} navigation={this.props.navigation} />
-                  )}
-                />
-              </View>
+            <View style={styles.postsSection}>
+              <Text style={styles.sectionTitle}>Mis posteos</Text>
+              <FlatList
+                data={this.state.posts}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) => (
+                  <Post postData={item} navigation={this.props.navigation} />
+                )}
+              />
             </View>
-          )}
+          </View>
+        )}
+
         <Pressable style={styles.logoutButton} onPress={() => this.logout()}>
           <Text style={styles.logoutText}>Cerrar sesión</Text>
         </Pressable>
       </View>
-     
-
     )
   }
 }
@@ -112,50 +106,75 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingHorizontal: 25,
-    paddingTop: 60,
+    paddingHorizontal: 40,
+    paddingTop: 50,
   },
+
   headerTitle: {
-    fontSize: 28,
+    fontSize: 26,
     fontWeight: '700',
     color: '#1DA1F2',
     textAlign: 'center',
-    marginBottom: 35,
+    marginBottom: 25,
   },
-  userInfo: {
-    fontSize: 18,
-    color: '#14171A',
-    alignSelf: 'flex-start',
-    marginBottom: 8,
-  },
+
   profileImage: {
-    width: 90,
-    height: 90,
-    borderRadius: 45,
-    marginRight: 20,
+    width: 110,
+    height: 110,
+    borderRadius: 55,
+    marginBottom: 15,
+    alignSelf: 'center',
   },
-  sectionTitle: {
-    fontSize: 22,
-    fontWeight: '600',
-    color: '#14171A',
-    alignSelf: 'flex-start',
-    marginTop: 20,
-    marginBottom: 10,
-  },
-  postList: {
+
+  profileDetails: {
+    alignItems: 'center',
+    justifyContent: 'center',
     width: '100%',
-    paddingBottom: 20,
+    paddingBottom: 15,
+
+    // 👇 esto hace que “Siguiendo” y “Seguidores” queden lado a lado
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    columnGap: 15, // espacio entre ellos
   },
+
+  followText: {
+    fontSize: 16,
+    color: '#14171A',
+  },
+
+  userInfo: {
+    width: '100%', // fuerza que los userInfo pasen a la línea siguiente
+    textAlign: 'center',
+    fontSize: 17,
+    color: '#14171A',
+    marginTop: 10,
+    
+  },
+
+  postsSection: {
+    width: '100%',
+    marginTop: 20,
+    alignItems: 'center',
+  },
+
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#1DA1F2',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+
   logoutButton: {
     backgroundColor: '#1DA1F2',
     paddingVertical: 15,
     paddingHorizontal: 80,
     borderRadius: 30,
-    marginTop: 30,
-    shadowColor: '#1DA1F2',
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
+    marginTop: 25,
+    alignSelf: 'center',
   },
+
   logoutText: {
     color: '#fff',
     fontWeight: 'bold',
