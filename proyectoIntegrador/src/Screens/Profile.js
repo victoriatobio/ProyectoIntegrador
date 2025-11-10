@@ -21,12 +21,12 @@ class Profile extends Component {
         let userPosts = [];
         docs.forEach(doc => {
           userPosts.push({
-            id: doc.id, 
-            data: doc.data()
+            id : doc.id, 
+            data : doc.data()
           })
         })
         this.setState({
-          posts: userPosts,
+          posts : userPosts,
           loading : false
         })
       })
@@ -37,8 +37,8 @@ class Profile extends Component {
         let usersName = [];
         docs.forEach(doc => {
           usersName.push({
-            id: doc.id, 
-            data: doc.data()
+            id : doc.id, 
+            data : doc.data()
           })
         })
         this.setState({
@@ -62,35 +62,45 @@ class Profile extends Component {
         <Text style={styles.headerTitle}>Mi perfil</Text>
 
         {this.state.loading ? (
-          <ActivityIndicator size='large' color='#1DA1F2' />
-        ) : (
-          <View style={styles.profileInfo}>
-            <Image source={profileTwitter} style={styles.profileImage} />
+          <ActivityIndicator size="large" color="#1DA1F2" />
+          ) : (
+            <View>
+              <View style={styles.profileInfo}>
+                <Image source={profileTwitter} style={styles.profileImage} />
+                  <Text style={styles.followText}>120 Siguiendo</Text>
+                  <Text style={styles.followText}>300 Seguidores</Text>
 
-            <Text style={styles.userInfo}>
-              usuario: {this.state.users.length > 0 ? this.state.users[0].data.userName : ''}
-            </Text>
+              </View>
 
-            <Text style={styles.userInfo}>
-              email: {this.state.users.length > 0 ? this.state.users[0].data.email : ''}
-            </Text>
+              {/* Usuario y email */}
+              <View style={styles.userData}>
+                <Text style={styles.userInfo}>
+                  @{this.state.users.length > 0 ? this.state.users[0].data.userName : ''}
+                </Text>
+                <Text style={styles.userInfo}>
+                  {this.state.users.length > 0 ? this.state.users[0].data.email : ''}
+                </Text>
+              </View>
 
-            <Text style={styles.sectionTitle}> Mis posteos </Text>
+              {/* Posteos */}
+              <View style={styles.postsSection}>
+                <Text style={styles.sectionTitle}>Mis posteos</Text>
 
-            <FlatList
-              data={this.state.posts}
-              keyExtractor={(item) => item.id}
-              renderItem={({ item }) => (
-                <Post postData={item} navigation={this.props.navigation} />
-              )}
-            />
-          </View>
-        )}
-
+                <FlatList
+                  data={this.state.posts}
+                  keyExtractor={(item) => item.id}
+                  renderItem={({ item }) => (
+                    <Post postData={item} navigation={this.props.navigation} />
+                  )}
+                />
+              </View>
+            </View>
+          )}
         <Pressable style={styles.logoutButton} onPress={() => this.logout()}>
           <Text style={styles.logoutText}>Cerrar sesión</Text>
         </Pressable>
       </View>
+     
 
     )
   }
@@ -119,10 +129,10 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   profileImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    marginRight: 15,
+    width: 90,
+    height: 90,
+    borderRadius: 45,
+    marginRight: 20,
   },
   sectionTitle: {
     fontSize: 22,
