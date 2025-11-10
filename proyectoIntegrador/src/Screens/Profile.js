@@ -16,13 +16,13 @@ class Profile extends Component {
 
   componentDidMount(){
     db.collection('posts')
-      .where('owner', '==', auth.currentUser.email)
+      .where('owner', '==', auth.currentUser.email) // filtra los posts del usuario logueado
       .onSnapshot((docs) => {
         let userPosts = [];
         docs.forEach(doc => {
           userPosts.push({
             id : doc.id, 
-            data : doc.data()
+            data : doc.data() // contenido del post
           })
         })
         this.setState({
@@ -32,7 +32,7 @@ class Profile extends Component {
       })
 
       db.collection('users')
-      .where('email', '==', auth.currentUser.email)
+      .where('email', '==', auth.currentUser.email) // filtra los datos de usuario del usuario logueado
       .onSnapshot((docs) => {
         let usersName = [];
         docs.forEach(doc => {
@@ -84,7 +84,7 @@ class Profile extends Component {
                 data={this.state.posts}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
-                  <Post postData={item} navigation={this.props.navigation} />
+                <Post postData={item} navigation={this.props.navigation} />
                 )}
               />
           </View>

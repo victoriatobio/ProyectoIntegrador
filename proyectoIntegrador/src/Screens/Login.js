@@ -23,8 +23,7 @@ class Login extends Component {
   }
 
   login(){
-    auth.signInWithEmailAndPassword(this.state.email, this.state.password)
-      .then((response) => {
+    auth.signInWithEmailAndPassword(this.state.email, this.state.password) // autentica al usuario con email y contraseña dados y con los de la base de datos
           this.setState({loggedIn : true})
           this.props.navigation.navigate('HomeMenu'); 
       })
