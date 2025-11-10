@@ -1,65 +1,18 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { auth } from '../firebase/config';
-import { db } from '../firebase/config';
-import firebase from 'firebase';
-
 
 class Post extends Component {
   constructor(props) {
     super(props);
     this.state = {
       fav: false,
-      listaDeYaLikearon: [],
-      texto:""
     };
   }
 
-  
-  componentDidMount() {
-    if (this.props.postData.data.likes.includes(auth.currentUser.email)) {
-      this.setState({fav:true})
-    }
-
-  }
-
   agregarEmailFavoritos() {
-    let lista = []
-
-      if (this.props.postData.data.likes.includes(auth.currentUser.email)){
-        db.collection('posts')
-              .doc(this.props.postData.id)
-              .update({
-                 likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email)
-  
-              })
-              .then(()=>{
-                  this.setState({
-                      fav:false
-                  })
-              })
-  
-      } else if (this.state.listaDeYaLikearon.includes(auth.currentUser.email)){
-        this.setState({texto:"Ya le diste like a este post"})
-      } else {
-          db.collection('posts')
-          .doc(this.props.postData.id)
-          .update({
-            likes: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email)
-          })
-          .then(()=>{
-            lista.push(auth.currentUser.email);
-            this.setState({
-              fav:true,
-              listaDeYaLikearon: lista
-              
-              })
-          })
     
-      }
-      }
-  
-  
+  }
 
 
 
@@ -68,20 +21,20 @@ class Post extends Component {
       <View style={styles.card} >
         <Text style={styles.owner} >{this.props.postData.data.owner}</Text>
         <Text style={styles.description} >{this.props.postData.data.description}</Text>
-
-        <Pressable onPress={()=> this.agregarEmailFavoritos()}>
-              <Text>{this.state.fav ? "❤️" : "🤍"}</Text>
-          </Pressable>
-
-          <Text style={styles.minitexto}>{this.state.texto}</Text>
-
         <Text>Likes: {this.props.postData.data.likes.length}</Text>
-
+        {auth.currentUser.email !== "" ? (
           <Pressable
-            onPress={() => this.props.navigation.navigate('Comments', { postId: this.props.postData.id })}
+            onPress={() => this.props.navigation.navigate('Comments', { postId: this.props.postData},  )}
             style={styles.boton2}>
             <Text style={styles.coment}>Comentar</Text>
-          </Pressable> 
+          </Pressable> ) : 
+          (
+          <Text style={styles.minitexto}>Inicia sesión para comentar</Text>
+          )}
+
+          <Pressable onPress={()=> this.agregarEmailFavoritos()}>
+              <Text>{this.state.fav ? "Sacar de Favoritos" : "Agregar a Favoritos"}</Text>
+          </Pressable>
 
       </View>
     );

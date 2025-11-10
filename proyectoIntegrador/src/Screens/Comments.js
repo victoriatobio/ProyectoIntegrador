@@ -15,7 +15,7 @@ class Comments extends Component {
   }
 
   componentDidMount() {
-    const postId = this.props.route.params.postId;
+    const postId = this.props.route.params.postId.id
 
     db.collection("posts").onSnapshot((docs) => {
       let comentariosPost = []; 
@@ -35,7 +35,7 @@ class Comments extends Component {
   }
 
   addComment() {
-    const postId = this.props.route.params.postId;
+    const postId = this.props.route.params.postId.id
 
     if (this.state.commentarionuevo === "") {
       this.setState({ error: "El comentario no puede estar vacío." });
@@ -63,12 +63,18 @@ class Comments extends Component {
   }
 
   render() {
+    console.log(this.props.route.params.postId.id)
     return (
       <View style={styles.container}>
         {this.state.cargandocomentarios ? (
           <ActivityIndicator size="large" color="#1DA1F2" />
         ) : (
           <View style={styles.innerContainer}>
+
+            <Text>Posteo: {this.props.route.params.postId.data.description}</Text>
+            <Text>Likes: {this.props.route.params.postId.data.likes.length}</Text>
+            <Text>de: {this.props.route.params.postId.data.owner}</Text>
+
             <Text style={styles.titulo}>Comentarios</Text>
 
             {this.state.comentarios.length === 0 ? (
