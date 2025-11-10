@@ -65,8 +65,6 @@ class Post extends Component {
               <Text>{this.state.fav ? "❤️" : "🤍"}</Text>
           </Pressable>
 
-          <Text style={styles.minitexto}>{this.state.texto}</Text>
-
         <Text>Likes: {this.props.postData.data.likes.length}</Text>
 
           <Pressable

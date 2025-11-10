@@ -1,8 +1,6 @@
 import app from 'firebase/app';
 import firebase from "firebase"
 
-//probelmas git prueba 
-
 const firebaseConfig = {
     apiKey: "AIzaSyAzJkw_mqWpVahJRWAs8Lz2MAC0a_0xsJw",
     authDomain: "proyecto-integrador-ca94a.firebaseapp.com",

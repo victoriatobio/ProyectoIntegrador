@@ -63,12 +63,12 @@ class Profile extends Component {
         {this.state.loading ? (
           <ActivityIndicator size='large' color='#1DA1F2' />
         ) : (
-          <View>
-            <Text style={styles.headerTitle}>
+          <View style={styles.profileInfo}>
+            <Text style={styles.userInfo}>
               usuario: {this.state.users.length > 0 ? this.state.users[0].data.userName : ''}
             </Text>
 
-            <Text style={styles.headerTitle}>
+            <Text style={styles.userInfo}>
               email: {this.state.users.length > 0 ? this.state.users[0].data.email : ''}
             </Text>
 
@@ -97,37 +97,54 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'flex-start',
     paddingHorizontal: 25,
+    paddingTop: 60,
   },
   headerTitle: {
-    fontSize: 26,
-    fontWeight: 'bold',
+    fontSize: 28,
+    fontWeight: '700',
     color: '#1DA1F2',
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: 35,
+  },
+  userInfo: {
+    fontSize: 18,
+    color: '#14171A',
+    alignSelf: 'flex-start',
+    marginBottom: 8,
   },
   sectionTitle: {
-    fontSize: 25,
-    fontWeight: 'bold',
+    fontSize: 22,
+    fontWeight: '600',
     color: '#14171A',
-    marginBottom: 10,
     alignSelf: 'flex-start',
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  postList: {
+    width: '100%',
+    paddingBottom: 20,
   },
   logoutButton: {
     backgroundColor: '#1DA1F2',
     paddingVertical: 15,
-    paddingHorizontal: 60,
+    paddingHorizontal: 80,
     borderRadius: 30,
-    marginTop: 10,
+    marginTop: 30,
+    shadowColor: '#1DA1F2',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
   },
   logoutText: {
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 18,
     textAlign: 'center',
-  }
+  },
 });
 
 export default Profile;

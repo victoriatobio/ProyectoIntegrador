@@ -42,14 +42,9 @@ class Register extends Component {
         .catch( error => {
             console.log(error);
             this.setState({error: error.message})
-            
         })
-
       }
      }
-    
-    
-
 
      render (){
         return(
@@ -75,7 +70,7 @@ class Register extends Component {
                     onChangeText={ text => this.setState({password:text}) }
                     value={this.state.password}/> 
 
-                  { this.state.error !== "" ? ( <Text style={styles.error} > {this.state.error} </Text> ) : console.log("el register funciono bien") }
+                  {this.state.error !== "" ? ( <Text style={styles.error} > {this.state.error} </Text> ) : console.log("el register funciono bien") }
 
                 <Pressable style={styles.boton} onPress={() => this.onSubmit(this.state.email, this.state.userName, this.state.password)} >
                     <Text style={styles.botonTexto}> Register </Text> 
