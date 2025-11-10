@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import { Text, View, StyleSheet, Pressable, TextInput } from 'react-native';
+import { Text, View, StyleSheet, Pressable, TextInput, Image } from 'react-native';
 import { auth } from '../firebase/config';
+import logoTwitter from '../../assets/twitterLogo.png';
 
 class Login extends Component {
   constructor(props){
@@ -35,6 +36,7 @@ class Login extends Component {
   render(){
     return (
       <View style={styles.container} > 
+        <Image source={logoTwitter}  style={styles.image}/>
         <Text style={styles.logo} > Login </Text>
         
         <TextInput
@@ -116,6 +118,13 @@ const styles = StyleSheet.create({
   registerText: {
     color: '#1DA1F2',
     fontSize: 16,
+  },
+  image: {
+    width: 80,                
+    height: 80,
+    resizeMode: 'contain',    
+    marginBottom: 20,        
+    alignSelf: 'center',    
   },
 });
 
