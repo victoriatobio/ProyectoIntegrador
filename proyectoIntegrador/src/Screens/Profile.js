@@ -134,10 +134,8 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     marginTop: 30,
     shadowColor: '#1DA1F2',
-    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
-    elevation: 5,
   },
   logoutText: {
     color: '#fff',
