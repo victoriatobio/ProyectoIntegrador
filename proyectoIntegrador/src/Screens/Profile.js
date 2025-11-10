@@ -68,6 +68,10 @@ class Profile extends Component {
               usuario: {this.state.users.length > 0 ? this.state.users[0].data.userName : ''}
             </Text>
 
+            <Text style={styles.headerTitle}>
+              email: {this.state.users.length > 0 ? this.state.users[0].data.email : ''}
+            </Text>
+
             <Text style={styles.sectionTitle}>Mis posteos</Text>
 
             <FlatList
