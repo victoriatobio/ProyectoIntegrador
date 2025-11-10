@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import { Text, View, StyleSheet, Pressable, FlatList, ActivityIndicator } from 'react-native';
+import { Text, View, StyleSheet, Pressable, FlatList, ActivityIndicator, Image } from 'react-native';
 import { auth, db} from '../firebase/config';
 import Post from '../components/Post';
+import profileTwitter from '../../assets/profileTwitter.jpg';
 
 class Profile extends Component {
   constructor(props){
@@ -64,6 +65,8 @@ class Profile extends Component {
           <ActivityIndicator size='large' color='#1DA1F2' />
         ) : (
           <View style={styles.profileInfo}>
+            <Image source={profileTwitter} style={styles.profileImage} />
+
             <Text style={styles.userInfo}>
               usuario: {this.state.users.length > 0 ? this.state.users[0].data.userName : ''}
             </Text>
@@ -72,7 +75,7 @@ class Profile extends Component {
               email: {this.state.users.length > 0 ? this.state.users[0].data.email : ''}
             </Text>
 
-            <Text style={styles.sectionTitle}>Mis posteos</Text>
+            <Text style={styles.sectionTitle}> Mis posteos </Text>
 
             <FlatList
               data={this.state.posts}
@@ -114,6 +117,12 @@ const styles = StyleSheet.create({
     color: '#14171A',
     alignSelf: 'flex-start',
     marginBottom: 8,
+  },
+  profileImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    marginRight: 15,
   },
   sectionTitle: {
     fontSize: 22,
