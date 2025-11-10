@@ -8,7 +8,7 @@ class Comments extends Component {
     super(props);
     this.state = {
       commentarionuevo: "",
-      muestradecomentarios: [],
+      comentarios: [],
       error: "",
       cargandocomentarios: true,
     };
@@ -17,20 +17,21 @@ class Comments extends Component {
   componentDidMount() {
     const postId = this.props.route.params.postId;
 
-    db.collection("posts")
-      .doc(postId)
-      .onSnapshot((doc) => {
-        const data = doc.data();
-        let muestradecomentarios = [];
-        if (data.muestradecomentarios) {
-          muestradecomentarios = data.muestradecomentarios;
+    db.collection("posts").onSnapshot((docs) => {
+      let comentariosPost = []; 
+
+      docs.forEach((doc) => {
+        if (doc.id === postId) {
+          const data = doc.data(); 
+          comentariosPost = data.comentarios 
         }
-        this.setState({
-          muestradecomentarios: doc.data.comentarios,
-          descripcion: doc.data().descripcion,
-          cargandocomentarios: false,
-        });
       });
+
+      this.setState({
+        comentarios: comentariosPost,
+        cargandocomentarios: false,
+      });
+    });
   }
 
   addComment() {
@@ -50,19 +51,13 @@ class Comments extends Component {
       db.collection("posts")
         .doc(postId)
         .update({
-          muestradecomentarios: firebase.firestore.FieldValue.arrayUnion(nuevoComentario),
+          comentarios: firebase.firestore.FieldValue.arrayUnion(nuevoComentario),
         })
         .then(() => {
-          this.setState({
-            commentarionuevo: "",
-            error: "",
-          });
-          console.log("Comentario agregado!");
+          this.setState({ commentarionuevo: "", error: "" });
         })
         .catch(() => {
-          this.setState({
-            error: "Hubo un problema al publicar el comentario.",
-          });
+          this.setState({ error: "Hubo un problema al publicar el comentario." });
         });
     }
   }
@@ -76,11 +71,11 @@ class Comments extends Component {
           <View style={styles.innerContainer}>
             <Text style={styles.titulo}>Comentarios</Text>
 
-            {this.state.muestradecomentarios.length === 0 ? (
+            {this.state.comentarios.length === 0 ? (
               <Text style={styles.noComments}>No hay comentarios aún.</Text>
             ) : (
               <FlatList
-                data={this.state.muestradecomentarios}
+                data={this.state.comentarios}
                 keyExtractor={(index) => index.toString()}
                 renderItem={({ item }) => (
                   <View style={styles.commentBox}>
@@ -100,9 +95,7 @@ class Comments extends Component {
               onChangeText={(text) => this.setState({ commentarionuevo: text })}
             />
 
-            {this.state.error !== "" ? (
-              <Text style={styles.error}>{this.state.error}</Text>
-            ) : null}
+            {this.state.error !== "" ? <Text style={styles.error}>{this.state.error}</Text> : null}
 
             <Pressable style={styles.boton} onPress={() => this.addComment()}>
               <Text style={styles.botonTexto}>Publicar comentario</Text>
@@ -202,3 +195,4 @@ const styles = StyleSheet.create({
 });
 
 export default Comments;
+
