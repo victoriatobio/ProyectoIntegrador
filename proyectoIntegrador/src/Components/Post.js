@@ -68,6 +68,13 @@ class Post extends Component {
       <View style={styles.card} >
         <Text style={styles.owner} >{this.props.postData.data.owner}</Text>
         <Text style={styles.description} >{this.props.postData.data.description}</Text>
+
+        <Pressable onPress={()=> this.agregarEmailFavoritos()}>
+              <Text>{this.state.fav ? "❤️" : "🤍"}</Text>
+          </Pressable>
+
+          <Text style={styles.minitexto}>{this.state.texto}</Text>
+
         <Text>Likes: {this.props.postData.data.likes.length}</Text>
 
           <Pressable
@@ -75,11 +82,6 @@ class Post extends Component {
             style={styles.boton2}>
             <Text style={styles.coment}>Comentar</Text>
           </Pressable> 
-
-          <Pressable onPress={()=> this.agregarEmailFavoritos()}>
-              <Text>{this.state.fav ? "Sacar de Favoritos" : "Agregar a Favoritos"}</Text>
-          </Pressable>
-
 
       </View>
     );

@@ -26,7 +26,8 @@ class Comments extends Component {
           muestradecomentarios = data.muestradecomentarios;
         }
         this.setState({
-          muestradecomentarios: muestradecomentarios,
+          muestradecomentarios: doc.data.comentarios,
+          descripcion: doc.data().descripcion,
           cargandocomentarios: false,
         });
       });
