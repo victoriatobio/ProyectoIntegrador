@@ -71,9 +71,11 @@ class Comments extends Component {
         ) : (
           <View style={styles.innerContainer}>
 
-            <Text>Posteo: {this.props.route.params.postId.data.description}</Text>
+          <View style={styles.card}>
+            <Text style={styles.description} >{this.props.route.params.postId.data.description}</Text>
             <Text>Likes: {this.props.route.params.postId.data.likes.length}</Text>
-            <Text>de: {this.props.route.params.postId.data.owner}</Text>
+            <Text  style={styles.owner} >de: {this.props.route.params.postId.data.owner}</Text>
+          </View>
 
             <Text style={styles.titulo}>Comentarios</Text>
 
@@ -198,6 +200,29 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    marginVertical: 10,
+    borderWidth: 1,
+    borderColor: '#E6ECF0',
+    marginLeft: 40,
+    marginRight: 40,
+  },
+  owner: {
+    color: '#1DA1F2',
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginBottom: 8,
+  },
+  description: {
+    fontSize: 16,
+    color: '#14171A',
+    marginBottom: 5,
+  }
+
 });
 
 export default Comments;
