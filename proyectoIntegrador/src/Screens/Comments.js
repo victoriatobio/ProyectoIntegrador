@@ -63,7 +63,6 @@ class Comments extends Component {
   }
 
   render() {
-    console.log(this.props.route.params.postId.id)
     return (
       <View style={styles.container}>
         {this.state.cargandocomentarios ? (
@@ -73,14 +72,14 @@ class Comments extends Component {
 
           <View style={styles.card}>
             <Text style={styles.description} >{this.props.route.params.postId.data.description}</Text>
-            <Text>Likes: {this.props.route.params.postId.data.likes.length}</Text>
+            <Text> Likes: {this.props.route.params.postId.data.likes.length}</Text>
             <Text  style={styles.owner} >de: {this.props.route.params.postId.data.owner}</Text>
           </View>
 
             <Text style={styles.titulo}>Comentarios</Text>
 
             {this.state.comentarios.length === 0 ? (
-              <Text style={styles.noComments}>No hay comentarios aún.</Text>
+              <Text style={styles.noComments}>No hay comentarios aún. </Text>
             ) : (
               <FlatList
                 data={this.state.comentarios}

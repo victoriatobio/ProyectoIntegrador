@@ -1,7 +1,8 @@
 import React, {Component} from "react";
-import { View, Text, Image, StyleSheet, FlatList, TextInput } from "react-native";
+import { View, Text, Image, StyleSheet, FlatList, TextInput} from "react-native";
 import { Pressable } from "react-native";
 import { db, auth } from "../firebase/config"
+import twitterLogo from '../../assets/twitterLogo.png';
 
 
 class Register extends Component {
@@ -42,18 +43,14 @@ class Register extends Component {
         .catch( error => {
             console.log(error);
             this.setState({error: error.message})
-            
         })
-
       }
      }
-    
-    
-
 
      render (){
         return(
             <View style={styles.container}>
+                <Image source={twitterLogo}  style={styles.image}/>
                 <Text style={styles.logo} >Register</Text>
 
                 <TextInput style={styles.input} 
@@ -75,7 +72,7 @@ class Register extends Component {
                     onChangeText={ text => this.setState({password:text}) }
                     value={this.state.password}/> 
 
-                  { this.state.error !== "" ? ( <Text style={styles.error} > {this.state.error} </Text> ) : console.log("el register funciono bien") }
+                  {this.state.error !== "" ? ( <Text style={styles.error} > {this.state.error} </Text> ) : console.log("el register funciono bien") }
 
                 <Pressable style={styles.boton} onPress={() => this.onSubmit(this.state.email, this.state.userName, this.state.password)} >
                     <Text style={styles.botonTexto}> Register </Text> 
@@ -140,6 +137,13 @@ const styles = StyleSheet.create({
   registerText: {
     color: '#1DA1F2',
     fontSize: 16,
+  },
+  image: {
+    width: 80,                
+    height: 80,
+    resizeMode: 'contain',    
+    marginBottom: 20,        
+    alignSelf: 'center',    
   },
 });
 

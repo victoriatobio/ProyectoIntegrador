@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import { View, Text, StyleSheet, Pressable, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Pressable, FlatList, Image } from 'react-native';
 import { db, auth } from '../firebase/config'
 import firebase from 'firebase';
 import Post from '../components/Post';
 import { ActivityIndicator } from 'react-native';
+import twitterLogo from '../../assets/twitterLogo.png';
 
 class Home extends Component {
   constructor(props){
@@ -33,6 +34,7 @@ class Home extends Component {
 render(){
   return (
     <View style={styles.scroleable}>
+      <Image source={twitterLogo}  style={styles.image}/>
       <Text style={styles.titulo} >Home</Text>
 
       {this.state.loading? 
@@ -53,16 +55,22 @@ render(){
 }
 
 const styles = StyleSheet.create({
-      titulo: {
-        fontSize: 30,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        textAlign: 'center',
+    titulo: {
+      fontSize: 30,
+      fontWeight: 'bold',
+      marginBottom: 20,
+      textAlign: 'center',
     },
     scroleable: {
       width: '100%',
       flex: 1
-    }
+    },
+    image: {
+      width: 50,                
+      height: 80,
+      resizeMode: 'contain',    
+      alignSelf: 'center',    
+    },
 });
 
 export default Home;

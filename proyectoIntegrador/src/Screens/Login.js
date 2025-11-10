@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import { Text, View, StyleSheet, Pressable, TextInput } from 'react-native';
+import { Text, View, StyleSheet, Pressable, TextInput, Image } from 'react-native';
 import { auth } from '../firebase/config';
+import twitterLogo from '../../assets/twitterLogo.png';
 
 class Login extends Component {
   constructor(props){
@@ -22,7 +23,7 @@ class Login extends Component {
   }
 
   login(){
-    auth.signInWithEmailAndPassword(this.state.email, this.state.password)
+    auth.signInWithEmailAndPassword(this.state.email, this.state.password) //autentica al usuario con email y contraseña dados y con los de la base de datos
       .then((response) => {
           this.setState({loggedIn : true})
           this.props.navigation.navigate('HomeMenu'); 
@@ -35,6 +36,7 @@ class Login extends Component {
   render(){
     return (
       <View style={styles.container} > 
+        <Image source={twitterLogo}  style={styles.image}/>
         <Text style={styles.logo} > Login </Text>
         
         <TextInput
@@ -116,6 +118,13 @@ const styles = StyleSheet.create({
   registerText: {
     color: '#1DA1F2',
     fontSize: 16,
+  },
+  image: {
+    width: 80,                
+    height: 80,
+    resizeMode: 'contain',    
+    marginBottom: 20,        
+    alignSelf: 'center',    
   },
 });
 
