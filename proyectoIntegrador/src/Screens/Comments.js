@@ -8,33 +8,34 @@ class Comments extends Component {
     super(props);
     this.state = {
       commentarionuevo: "",
-      muestradecomentarios: [],
+      comentarios: [],
       error: "",
       cargandocomentarios: true,
     };
   }
 
   componentDidMount() {
-    const postId = this.props.route.params.postId;
+    const postId = this.props.route.params.postId.id
 
-    db.collection("posts")
-      .doc(postId)
-      .onSnapshot((doc) => {
-        const data = doc.data();
-        let muestradecomentarios = [];
-        if (data.muestradecomentarios) {
-          muestradecomentarios = data.muestradecomentarios;
+    db.collection("posts").onSnapshot((docs) => {
+      let comentariosPost = []; 
+
+      docs.forEach((doc) => {
+        if (doc.id === postId) {
+          const data = doc.data(); 
+          comentariosPost = data.comentarios 
         }
-        this.setState({
-          muestradecomentarios: doc.data.comentarios,
-          descripcion: doc.data().descripcion,
-          cargandocomentarios: false,
-        });
       });
+
+      this.setState({
+        comentarios: comentariosPost,
+        cargandocomentarios: false,
+      });
+    });
   }
 
   addComment() {
-    const postId = this.props.route.params.postId;
+    const postId = this.props.route.params.postId.id
 
     if (this.state.commentarionuevo === "") {
       this.setState({ error: "El comentario no puede estar vacío." });
@@ -50,37 +51,39 @@ class Comments extends Component {
       db.collection("posts")
         .doc(postId)
         .update({
-          muestradecomentarios: firebase.firestore.FieldValue.arrayUnion(nuevoComentario),
+          comentarios: firebase.firestore.FieldValue.arrayUnion(nuevoComentario),
         })
         .then(() => {
-          this.setState({
-            commentarionuevo: "",
-            error: "",
-          });
-          console.log("Comentario agregado!");
+          this.setState({ commentarionuevo: "", error: "" });
         })
         .catch(() => {
-          this.setState({
-            error: "Hubo un problema al publicar el comentario.",
-          });
+          this.setState({ error: "Hubo un problema al publicar el comentario." });
         });
     }
   }
 
   render() {
+    console.log(this.props.route.params.postId.id)
     return (
       <View style={styles.container}>
         {this.state.cargandocomentarios ? (
           <ActivityIndicator size="large" color="#1DA1F2" />
         ) : (
           <View style={styles.innerContainer}>
+
+          <View style={styles.card}>
+            <Text style={styles.description} >{this.props.route.params.postId.data.description}</Text>
+            <Text>Likes: {this.props.route.params.postId.data.likes.length}</Text>
+            <Text  style={styles.owner} >de: {this.props.route.params.postId.data.owner}</Text>
+          </View>
+
             <Text style={styles.titulo}>Comentarios</Text>
 
-            {this.state.muestradecomentarios.length === 0 ? (
+            {this.state.comentarios.length === 0 ? (
               <Text style={styles.noComments}>No hay comentarios aún.</Text>
             ) : (
               <FlatList
-                data={this.state.muestradecomentarios}
+                data={this.state.comentarios}
                 keyExtractor={(index) => index.toString()}
                 renderItem={({ item }) => (
                   <View style={styles.commentBox}>
@@ -100,9 +103,7 @@ class Comments extends Component {
               onChangeText={(text) => this.setState({ commentarionuevo: text })}
             />
 
-            {this.state.error !== "" ? (
-              <Text style={styles.error}>{this.state.error}</Text>
-            ) : null}
+            {this.state.error !== "" ? <Text style={styles.error}>{this.state.error}</Text> : null}
 
             <Pressable style={styles.boton} onPress={() => this.addComment()}>
               <Text style={styles.botonTexto}>Publicar comentario</Text>
@@ -199,6 +200,30 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    marginVertical: 10,
+    borderWidth: 1,
+    borderColor: '#E6ECF0',
+    marginLeft: 40,
+    marginRight: 40,
+  },
+  owner: {
+    color: '#1DA1F2',
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginBottom: 8,
+  },
+  description: {
+    fontSize: 16,
+    color: '#14171A',
+    marginBottom: 5,
+  }
+
 });
 
 export default Comments;
+
